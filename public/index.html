@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>My Voter - simple, friendly polling at its best.</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		
+	</head>
+
+	<body>
+		<div class="container">	
+			<div id="nav" class="row">
+				<a class="menu" href="/login">MY POLLS</a>
+				<p class="menu-divide">|</p>
+				<a class="menu" href="/signup">SIGN UP</a>
+			</div>
+			<br/>
+			<h1 class="login-text"><i class="fa fa-check-square-o fa5x"></i> My Voter</h1>
+					
+				<h2>Latest polls...</h2>
+				<div id="latestPolls">
+					<div id="dummyPoll" class="poll" style="display:none;">
+						<span class="pollName"></span>
+						<br/>
+						<div class="pollOptions">
+							<span class="voteBtn">Vote</span>
+							<i class="tooltip fa fa-bar-chart viewBtn fa-lg"><span class="tooltiptext">View results</span></i>
+							<div class="voteCount tooltip"><span class="voteCountNum">0</span><span class="tooltiptext ttCountNum">0 people have voted</span><i class="pollIcon fa fa-user-o fa-lgx"></i></div>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<div class="login row">
+				<a href="/login">
+					<div class="btn" id="login-btn">
+						<p>LOGIN</p>
+					</div>
+				</a>
+				<a href="/signup">
+					<div class="btn" id="signup-btn">
+						<p>SIGN UP</p>
+					</div>
+				</a>
+			</div>
+			
+		</div>
+		
+		<script type="text/javascript" src="/common/ajax-functions.js"></script>
+		<script type="text/javascript" src="/controllers/indexController.client.js"></script>
+	</body>
+
+</html>

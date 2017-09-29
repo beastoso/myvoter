@@ -1,0 +1,374 @@
+/********* Fonts **********/
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url('../fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url('../fonts/Roboto-Medium.ttf') format('truetype');
+}
+
+/****** Main Styling ******/
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	color: #00BCD4;
+	height: 20px;
+	margin: 0 0 14px 0;
+	text-align: center;
+}
+
+p {
+	margin: 8px 0 0 0;
+}
+
+.container p {
+	text-align: center;
+	padding: 0;
+}
+
+.container {
+	padding: 0 5px 0 5px;
+}
+
+/****** Header Styling ******/
+
+header p {
+	margin: 16px 0 5px 0;
+}
+
+.menu {
+	text-decoration: none;
+	padding: 6px;
+	margin: 0;
+	color: #727272;
+}
+
+.menu:visited {
+	color: #727272;
+}
+
+.menu:hover {
+	color: #FFA000;
+}
+
+.menu:active {
+	color: #FF630D;
+}
+
+header a ~ p {
+	padding: 0;
+	display: inline;
+	color: #ECEFF1;
+}
+
+#name {
+	font-weight: 400;
+}
+
+/****** Login Styling ******/
+
+.login, .signup {
+	margin: 20px auto;
+	text-align: center;
+}
+
+#login-btn, #signup-btn {
+	width: 225px;
+	padding: 7px 5px;
+}
+
+.btn p {
+	margin: 8px 0 0 0;
+	padding: 0;
+}
+
+
+/****** Logo Div Styling ******/
+
+img {
+	margin: 0 auto;
+	display: block;
+}
+
+h1 { 
+	padding: 0;
+	margin: -25px 0 0 0;
+	font-weight: 500;
+	font-size: 60px;
+	color: #FFA000;
+	text-align: center;
+}
+
+ul {
+	list-style-type: circle;
+}
+
+/****** Click Styling ******/
+
+.btn-container {	/* Styling for the div that contains the buttons */
+	margin: -10px auto 0 auto;
+	text-align: center;
+}
+
+.btn {	/* Styling for buttons */
+	margin: 4px 8px;
+	color: white;
+	background-color: #00BCD4;
+	display: inline-block;
+	border: 0;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 10px 5px;
+	width: 150px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+label {
+	margin-left: 10px;
+	width: 15%;
+}
+
+input[type=text],input[type=password] {
+	margin: 4px 8px;
+	display: inline-block;
+	border: 0;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 10px 5px;
+	width: 80%;
+	font-weight: 500;
+}
+
+textarea {
+	resize: none;
+	margin: 4px 8px;
+	height: 50px;
+	display: inline-block;
+	border: 0;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 10px 5px;
+	width: 80%;
+	font-weight: 500;
+}
+
+
+.btn:focus {	/* Remove outline when hovering over button */
+	outline: none;
+}
+
+.btn:active {	/* Scale the button down by 10% when clicking on button */
+	transform: scale(0.9, 0.9);
+	-webkit-transform: scale(0.9, 0.9);
+	-moz-transform: scale(0.9, 0.9);
+}
+
+.btn-delete {	/* Styling for delete button */
+	background-color: #ECEFF1;
+	color: #212121;
+}
+
+#click-nbr {
+	font-weight: 400;
+}
+
+/****** Profile Styling ******/
+
+.container {
+	width: 350px;
+	height: 80%;
+	border-radius: 3px;
+	margin: 86px auto 0 auto;
+	background-color: #EEE;
+	color: #000;
+}
+
+.profile p:first-child {
+	padding-top: 16px;
+}
+
+.profile p:nth-child(5) {
+	margin-bottom: 16px
+}
+
+.profile p {
+	margin: 0 0 5px 16px;
+	text-align: left;
+}
+
+.profile-value {
+	font-weight: 400;
+}
+
+.innerDiv {
+	padding: 0px 10px 0px 10px;
+	margin-bottom: 5px;
+}
+
+span {
+	font-weight: 500;
+}
+
+.profile > img {
+	padding-top: 16px;
+	margin-bottom: 16px;
+}
+
+#menu {
+	margin: 15px auto;
+	text-align: center;
+}
+
+.menu:hover {
+	color: #FFA000;
+}
+
+.menu:active {
+	color: #FF630D;
+}
+
+.menu-divide {
+	color: #FFFFFF;
+	display: inline;
+}
+
+#options {
+	padding-left: 5px;
+}
+
+.poll {
+	width: 80%;
+	margin: 2px auto;
+	border: 1px solid black;
+	border-radius: 15px;
+	text-align: center;
+	padding: 3px 10px 3px 10px;
+}
+
+.poll i {
+	margin: 0 2px 0 2px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size: 14px;
+ 
+    position: absolute;
+    z-index: 1;
+    top: 18px;
+    left: 65%;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.pollName {
+	padding-top: 10px;
+	text-align: center;
+}
+
+.pollOptions i {
+	cursor: pointer;
+}
+
+.deleteBtn {
+	color: red;
+}
+
+.editBtn {
+	color: magenta;
+}
+
+.viewBtn {
+	color: blue;
+}
+
+.voteBtn {
+	color: green;
+	font-size: 12;
+	font-weight: bold;
+	cursor: pointer;
+	padding-bottom: 8px;
+}
+
+.voteCount {
+	margin: 10px 5px 0 5px;
+	color: #FFA000;
+}
+
+#user-polls .voteCount {
+	float: right;
+	font-size: 24px;
+}
+
+#latestPolls {
+	padding: 5px;
+	height: 250px;
+	overflow-y: scroll;
+}
+
+#latestPolls .poll {
+	text-align: center;
+}
+#latestPolls .pollName {
+	font-size: 24px;
+}
+#latestPolls .pollOptions {
+	font-size: 20px;
+}
+
+.voteOption {
+	margin: 3px auto;
+	display: inline-block;
+	border: 1px solid black;
+	font-size: 14px;
+	border-radius: 10px;
+	padding: 10px 5px;
+	width: 80%;
+	font-weight: 500;
+	cursor: pointer;
+}
+.voteOption input, .voteOption span {
+	cursor: pointer;
+}
+.submitBtn {
+	width: 80%;
+}
+
+.optionSelected {
+	color: #fff;
+	background-color: blue;
+}
+
+#nav {
+	text-align:right;
+	width: 100%;
+	margin-bottom: 10px;
+}

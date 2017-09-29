@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>My Voter - the simple and freindly way to test the waters.</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="profile">
+				<div id="nav">
+					<a class="menu" href="/">HOME</a>
+					<p class="menu-divide">|</p>
+					<a class="menu" href="/login">MY POLLS</a>
+				</div>
+				<br/>
+				<h1 id="pollName">Lets Poll!</h1>
+				<form id="voteForm" method="post">
+					<input type="hidden" id="pollId" name="pollId"/>
+					<input type="hidden" id="optionId" name="optionId"/>
+					<div id="options">
+						<div class="voteOption radio row" id="dummyOption" style="display:none;">
+							<label><input type="radio" name="voteOption"> <span class="optionText"></span></label>
+						</div>
+					</div>
+					<button class="btn btn-success" id="submitBtn">Vote!</button>
+				</form>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/common/ajax-functions.js"></script>
+		<script type="text/javascript" src="/controllers/voteController.client.js"></script>
+	</body>
+
+</html>

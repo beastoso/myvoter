@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>My Voting App - Where I can create my own polls and share them</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="profile">
+				<div id="nav">
+					<a class="menu" href="/">HOME</a>
+					<p class="menu-divide">|</p>
+					<a class="menu" href="/logout">LOGOUT</a>
+				</div>
+				<img src="/public/img/gh-mark-32px.png" alt="github logo" />
+				<p><span>Hi </span><span id="user-name" class="profile-value"></span></p>
+				<p><span>Here are your polls: </span></p>
+				<div id="user-polls" class="profile-value innerDiv">
+					<div id="dummyPoll" class="poll" style="display:none;">
+						<div class="voteCount tooltip"><span class="voteCountNum">0</span><span class="tooltiptext ttCountNum">0 people have voted</span><i class="pollIcon fa fa-user-o fa-lgx"></i></div>
+						<span class="pollName"></span>
+						<br/>
+						<div class="pollOptions">
+							<span class="voteBtn">Vote</span>
+							<i class="tooltip fa fa-bar-chart viewBtn fa-lg"><span class="tooltiptext">View results</span></i>
+							<i class="tooltip fa fa-edit editBtn fa-lg"><span class="tooltiptext">Edit poll</span></i>
+							<i class="tooltip fa fa-remove deleteBtn fa-lg"><span class="tooltiptext">Remove poll</span></i>
+						</div>
+					</div>
+				</div>
+				<div id="menu">
+					<a class="menu" href="/">Home</a>
+					<p class="menu-divide">|</p>
+					<a class="new" href="/new">Make a poll!</a>
+					<p class="menu-divide">|</p>
+					<a class="menu" href="/logout">Logout</a>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/common/ajax-functions.js"></script>
+		<script type="text/javascript" src="/controllers/userController.client.js"></script>
+	</body>
+
+</html>

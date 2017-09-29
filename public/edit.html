@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>My Voter - the simple and freindly way to test the waters.</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="poll-view">
+				<div id="nav">
+					<a class="menu" href="/">HOME</a>
+					<p class="menu-divide">|</p>
+					<a class="menu" href="/profile">MY POLLS</a>
+					<p class="menu-divide">|</p>
+					<a class="menu" href="/logout">LOGOUT</a>
+				</div>
+				<br/>
+				<h1>Edit my poll</h1>
+				<form id="pollForm"  action="#" onSubmit="sendForm();">
+					<input type="hidden" id="pollId" name="pollId">
+					<label for="name">Name:</label><input type="text" name="name" disabled>
+					<br/>
+					<label for="options">Options:</label>
+					<br/>
+					<div id="options">
+						<span id="dummyOption" style="display:none;" class="pollOption"><i class="fa fa-square-o"></i><input type="text" name="pollOption"></span>
+					</div>
+					<br/>
+					
+				</form>
+				<label for="pollLink">Share:</label>
+				<textarea rows="1" id="pollLink" name="pollLink" disabled></textarea>
+				<br/>
+				<button class="btn" id="addOption"><i class="fa fa-plus-square"></i> Add option</button>
+				<button class="btn" id="copyBtn"><i class="fa fa-copy"></i> Copy link</button>
+				<button class="btn" id="saveEdits">Update!</button>
+				<br/>
+				<div id="menu">
+					<a class="menu" href="/">Home</a>
+					<p id="menu-divide">|</p>
+					<a class="menu" href="/vote/" id="voteBtn">Vote</a>
+					<p id="menu-divide">|</p>
+					<a class="menu" href="/results/" id="resultsBtn">Results</a>
+					<p id="menu-divide">|</p>
+					<a class="menu" href="/logout">Logout</a>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/common/ajax-functions.js"></script>
+		<script type="text/javascript" src="/controllers/clickController.client.js"></script>
+	</body>
+
+</html>

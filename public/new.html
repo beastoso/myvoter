@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>My Voter - the simple and freindly way to test the waters.</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="poll-view">
+				<div id="nav">
+					<a class="menu" href="/">HOME</a>
+					<p class="menu-divide">|</p>
+					<a class="menu" href="/profile">MY POLLS</a>
+					<p class="menu-divide">|</p>
+					<a class="menu" href="/logout">LOGOUT</a>
+				</div>
+				<br/>
+				<h1>Start a new poll</h1>
+				<div id="details">
+					<form id="pollForm"  action="#" onSubmit="sendForm();">
+						<label for="name">Subject:</label><input type="text" name="name">
+						<br/>
+						<label for="options">Options:</label>
+						<br/>
+						<div id="options">
+							<span class="pollOption"><i class="fa fa-square-o"></i><input type="text" name="pollOption0"></span>
+						</div>
+						<br/>
+					</form>
+					<button class="btn" id="addOption"><i class="fa fa-plus-square"></i> Add poll option</button>
+					<button class="btn" id="submitNew">Start polling!</button>
+				</div>
+				<div id="share" style="display:none;">
+					<p>Now share it with all of your friends:</p>
+					<textarea rows="1" id="pollLink" disabled></textarea>
+					<button class="btn" id="copyBtn"><i class="fa fa-copy"></i> Copy to clipboard</button>
+				</div>
+				<br/>
+				<div id="menu">
+					<a class="menu" href="/">Home</a>
+					<p class="menu-divide">|</p>
+					<a class="menu" href="/logout">Logout</a>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/common/ajax-functions.js"></script>
+		<script type="text/javascript" src="/controllers/clickController.client.js"></script>
+	</body>
+
+</html>
