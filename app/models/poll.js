@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 
-var connection = mongoose.createConnection('mongodb://localhost:27017/myvoter');
+var connection = mongoose.createConnection('mongodb://beastoso:hard24get@ds155674.mlab.com:55674/beastoso-myvoter');
 var Schema = mongoose.Schema;
 
 var Poll = new Schema({

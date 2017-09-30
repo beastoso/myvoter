@@ -87,7 +87,7 @@ header a ~ p {
 /****** Login Styling ******/
 
 .login, .signup {
-	margin: 20px auto;
+	margin: 0px auto;
 	text-align: center;
 }
 

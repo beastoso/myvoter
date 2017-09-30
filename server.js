@@ -5,7 +5,6 @@ var routes = require('./app/routes/index.js');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
 
 var app = express();
 require('dotenv').load();
@@ -23,7 +22,6 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

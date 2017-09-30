@@ -59,7 +59,6 @@ module.exports = function (app, passport) {
 					res.send(err);
 				}
 				else {
-					res.cookie('user', user);
 					req.session.user = user;
 					res.redirect('/profile');
 				}
@@ -69,7 +68,6 @@ module.exports = function (app, passport) {
 	app.route('/logout')
 		.get(function (req, res) {
 			req.session.user = null;
-			req.clearCookie('user');
 			res.redirect('/login');
 		});
 
