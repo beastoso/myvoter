@@ -59,6 +59,7 @@ module.exports = function (app, passport) {
 					res.send(err);
 				}
 				else {
+					res.cookie('user', user);
 					req.session.user = user;
 					res.redirect('/profile');
 				}
@@ -68,6 +69,7 @@ module.exports = function (app, passport) {
 	app.route('/logout')
 		.get(function (req, res) {
 			req.session.user = null;
+			req.clearCookie('user');
 			res.redirect('/login');
 		});
 
@@ -93,22 +95,19 @@ module.exports = function (app, passport) {
 		});
 	app.route('/profile')
 		.get(isLoggedIn, function(req, res) {
-			VoteHandler.listPolls(req.session.user._id, function(err, pollsData) {
-				if (err) return res.send(err);
-				res.sendFile(path + '/public/profile.html');
-			});
+			res.sendFile(path + '/public/profile.html');
 		});	
 	app.route('/api/profile')
 		.get(isLoggedIn, function(req, res) {
 			VoteHandler.listPolls(req.session.user._id, function(err, pollsData) {
-				if (err) {
-					return res.send(err);
-				}
+				if (err) return res.send(err);
 				if (pollsData != null && pollsData.length > 0) {
-					var pollIds = [];
+					var pollIds = [], polls = [];
 					pollsData.forEach(function(poll) {
-						pollIds.push(poll._id);
-						poll.votes = 0;
+						var pollObj = poll.toObject();
+						pollIds.push(pollObj._id);
+						pollObj.votes = 0;
+						polls.push(pollObj);
 					});
 					VoteHandler.getAllVotes(pollIds, function(err, votes) {
 						if (err) {
@@ -116,7 +115,7 @@ module.exports = function (app, passport) {
 						}
 						if (votes != null && votes.length > 0) {
 							votes.forEach(function(vote) {
-								pollsData.forEach(function(poll) {
+								polls.forEach(function(poll) {
 									if (vote.poll_id.toString() == poll._id.toString()) {
 										poll.votes = vote.count;
 										return false;
@@ -126,14 +125,14 @@ module.exports = function (app, passport) {
 						}
 						res.json({
 							name: req.session.user.name,
-							polls: pollsData
+							polls: polls
 						});
 					});
 				}
 				else {
 					res.json({
 						name: req.session.user.name,
-						polls: pollsData
+						polls: false
 					});
 				}
 			});
@@ -146,10 +145,12 @@ module.exports = function (app, passport) {
 					return res.send(err);
 				}
 				if (pollsData != null && pollsData.length > 0) {
-					var pollIds = [];
+					var pollIds = [], polls = [];
 					pollsData.forEach(function(poll) {
-						pollIds.push(poll._id);
-						poll.votes = 0;
+						var pollObj = poll.toObject();
+						pollIds.push(pollObj._id);
+						pollObj.votes = 0;
+						polls.push(pollObj);
 					});
 					VoteHandler.getAllVotes(pollIds, function(err, votes) {
 						if (err) {
@@ -157,7 +158,7 @@ module.exports = function (app, passport) {
 						}
 						if (votes != null && votes.length > 0) {
 							votes.forEach(function(vote) {
-								pollsData.forEach(function(poll) {
+								polls.forEach(function(poll) {
 									if (vote.poll_id.toString() == poll._id.toString()) {
 										poll.votes = vote.count;
 										return false;
@@ -166,14 +167,12 @@ module.exports = function (app, passport) {
 							});
 						}
 						res.json({
-							polls: pollsData
+							polls: polls
 						});
 					});
 				}
 				else {
-					res.json({
-						polls: pollsData
-					});
+					res.json(false);
 				}
 			});
 		});
@@ -196,11 +195,12 @@ module.exports = function (app, passport) {
 				if (poll == null) return res.send('could not find poll');
 				VoteHandler.getPollOptions(pollId, function(err, options) {
 					if (err) return res.send(err);
-					poll.options = options;
 					VoteHandler.getVotes(pollId, function(err, votes) {
 						if (err) return res.send(err);
-						poll.votes = votes;
-						res.json(poll);
+						var pollObj = poll.toObject();
+						pollObj.options = options;
+						pollObj.votes = votes;
+						res.json(pollObj);;
 					});
 				});
 			});
@@ -213,8 +213,9 @@ module.exports = function (app, passport) {
 				if (poll == null) return res.send("could not find poll");
 				VoteHandler.getPollOptions(pollId, function(err, options) {
 					if (err) return res.send(err);
-					poll.options = options;
-					res.json(poll);
+					var pollObj = poll.toObject();
+					pollObj.options = options;
+					res.json(pollObj);
 				});
 			});
 		})
@@ -223,10 +224,10 @@ module.exports = function (app, passport) {
 				pollName = req.body.name,
 				options = req.body.options;
 				
-			VoteHandler.addPoll(userId, pollName, function(err, data) {
+			VoteHandler.addPoll(userId, pollName, function(err, poll) {
 				if (err) res.json(err);
 				else {
-					var pollId = data._id;
+					var pollId = poll.toObject()._id;
 					options.forEach(function(option){
 						VoteHandler.addPollOption(userId, pollId, option, function(err, data) {
 							if (err) return res.json(err);
@@ -240,17 +241,16 @@ module.exports = function (app, passport) {
 		.put(isLoggedIn, function (req, res) {
 			var userId = req.session.user._id,
 				pollId = req.body.pollId,
-				pollName = req.body.name,
 				options = req.body.options;
 				
-			VoteHandler.getPoll(pollId, function(err, poll) {
-				if (err) res.json(err);
-				else {
-					var existingOptions = poll.options;
+			VoteHandler.getPollOptions(pollId, function(err, xOptions) {
+				if (err) return res.json(err);
+				if (options && options.length > 0) {
+					var existingOptions = xOptions;
 					options.forEach(function(option){
 						var found = false;
 						existingOptions.forEach(function(xOption) {
-							if (xOption.text == option) {
+							if (xOption.toObject().text == option) {
 								found = true;
 								return false;
 							}

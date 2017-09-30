@@ -37,6 +37,21 @@
       else {
          polls.innerHTML = "<p>No polls have been created. Sign in to create one now!</p>";
       }
+      
+      if (document.cookie) {
+         var buttons = document.getElementsByClassName("login")[0];
+         buttons.setAttribute("style","display:none;");
+         
+         var nav = document.getElementById("nav");
+         var links = nav.getElementsByTagName("a");
+         var i;
+         for (i = 0; i< links.length; i++) {
+            var linkElem = links[i];
+            if (linkElem.getAttribute("id") !== "profileLink") {
+               linkElem.setAttribute("style","display:none;");
+            }
+         }
+      }
 
    }));
 })();

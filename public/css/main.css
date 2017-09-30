@@ -49,6 +49,12 @@ header p {
 	margin: 16px 0 5px 0;
 }
 
+#nav {
+	text-align:right;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
 .menu {
 	text-decoration: none;
 	padding: 6px;
@@ -98,9 +104,11 @@ header a ~ p {
 
 /****** Logo Div Styling ******/
 
-img {
+#profileIcon {
 	margin: 0 auto;
 	display: block;
+	text-align: center;
+	color: #2980B9
 }
 
 h1 { 
@@ -112,9 +120,6 @@ h1 {
 	text-align: center;
 }
 
-ul {
-	list-style-type: circle;
-}
 
 /****** Click Styling ******/
 
@@ -137,36 +142,6 @@ ul {
 	cursor: pointer;
 }
 
-label {
-	margin-left: 10px;
-	width: 15%;
-}
-
-input[type=text],input[type=password] {
-	margin: 4px 8px;
-	display: inline-block;
-	border: 0;
-	font-size: 14px;
-	border-radius: 3px;
-	padding: 10px 5px;
-	width: 80%;
-	font-weight: 500;
-}
-
-textarea {
-	resize: none;
-	margin: 4px 8px;
-	height: 50px;
-	display: inline-block;
-	border: 0;
-	font-size: 14px;
-	border-radius: 3px;
-	padding: 10px 5px;
-	width: 80%;
-	font-weight: 500;
-}
-
-
 .btn:focus {	/* Remove outline when hovering over button */
 	outline: none;
 }
@@ -182,9 +157,6 @@ textarea {
 	color: #212121;
 }
 
-#click-nbr {
-	font-weight: 400;
-}
 
 /****** Profile Styling ******/
 
@@ -289,6 +261,37 @@ span {
 	visibility: visible;
 }
 
+/**  Form styling  **/
+
+label {
+	margin-left: 10px;
+	width: 15%;
+}
+
+input[type=text],input[type=password] {
+	margin: 4px 8px;
+	display: inline-block;
+	border: 0;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 10px 5px;
+	width: 80%;
+	font-weight: 500;
+}
+
+textarea {
+	resize: none;
+	margin: 4px 8px;
+	height: 50px;
+	display: inline-block;
+	border: 0;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 10px 5px;
+	width: 90%;
+	font-weight: 500;
+}
+
 .pollName {
 	padding-top: 10px;
 	text-align: center;
@@ -321,6 +324,10 @@ span {
 .voteCount {
 	margin: 10px 5px 0 5px;
 	color: #FFA000;
+}
+
+#user-polls {
+	padding-top: 10px;
 }
 
 #user-polls .voteCount {
@@ -358,17 +365,12 @@ span {
 .voteOption input, .voteOption span {
 	cursor: pointer;
 }
-.submitBtn {
-	width: 80%;
+#submitBtn {
+	width: 90%;
+	background-color: green;
 }
 
 .optionSelected {
 	color: #fff;
 	background-color: blue;
-}
-
-#nav {
-	text-align:right;
-	width: 100%;
-	margin-bottom: 10px;
 }

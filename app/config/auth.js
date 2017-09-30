@@ -1,6 +1,6 @@
 'use strict';
 
-var User = require('../models/users');
+var User = require('../models/user');
 var md5 = require('js-md5');
 
 function hashPwd(password) {

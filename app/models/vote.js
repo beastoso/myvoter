@@ -5,10 +5,10 @@ var mongoose = require('mongoose');
 var connection = mongoose.createConnection('mongodb://localhost:27017/myvoter');
 var Schema = mongoose.Schema;
 
-var Poll = new Schema({
-		user_id: Schema.Types.ObjectId,
-		name: String,
-		active: String
+var Vote = new Schema({
+		poll_id: Schema.Types.ObjectId,
+		option_id: Schema.Types.ObjectId,
+		vote_date: Number
 });
 
-module.exports = connection.model('Poll', Poll);
+module.exports = connection.model('Vote', Vote);

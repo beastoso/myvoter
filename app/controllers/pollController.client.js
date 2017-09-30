@@ -4,8 +4,7 @@
 (function () {
 
    var addButton = document.getElementById("addOption");
-   var submitButton = document.getElementById("submitNew");
-   var saveButton = document.getElementById("saveEdits");
+   var submitButton = document.getElementById("submitBtn");
    var pollIdField = document.getElementById("pollId");
    var resultsButton = document.getElementById("resultsBtn");
    var voteButton = document.getElementById("voteBtn");
@@ -49,9 +48,6 @@
    }
    if (submitButton != null) {
       submitButton.addEventListener('click', sendForm);
-   }
-   if (saveButton != null) {
-      saveButton.addEventListener('click', sendForm);
    }
 
 })();
@@ -119,6 +115,8 @@ function sendForm() {
  				detailsDiv.setAttribute("style","display:none;");
  				var shareDiv = document.getElementById("share");
  				shareDiv.removeAttribute("style");
+ 				var header = document.getElementsByTagName("h1")[0];
+ 				header.setAttribute("style","display:none;");
  				var linkBox = document.getElementById("pollLink");
  				linkBox.textContent = "https://myvoter-beastoso.c9users.io/vote/"+pollId;
  				var linkBtn = document.getElementById("copyBtn");
@@ -127,7 +125,7 @@ function sendForm() {
  					 document.execCommand('copy');
  				});
  			}
-  			 window.location.pathname = "/profile";
+  			 
 		}
 	}));
 }

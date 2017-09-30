@@ -1,203 +1,122 @@
+'use strict';
+
 var mongo = require("mongodb");
 
-var CONNECT_URL = 'mongodb://localhost:27017/myvoter';
+var User = require('../models/user');
+var Poll = require('../models/poll');
+var PollOption = require('../models/polloption');
+var Vote = require('../models/vote');
 
 var self = module.exports = {
   listPolls: function(userId, callback) {
-    mongo.connect(CONNECT_URL, function(err, db) {
-      if (err) callback(err, null);
-      else {
-        var collection = db.collection('Poll');
-        var matchQuery = {'active':'true'};
-        if (userId != null) {
-          matchQuery.user_id = new mongo.ObjectId(userId);
-        }
-        
-        collection.find(
-          matchQuery
-        ).toArray(function(error, documents) {
-          if (error) callback(err, null);
-          else {
-            db.close();
-            callback(null, documents);
-          }
-        });
-      }
+    var matchQuery = {'active':'true'};
+    if (userId != null) {
+      matchQuery.user_id = new mongo.ObjectId(userId);
+    }
+    Poll.find(matchQuery).exec(function(err, polls) {
+      if (err) return callback(err);
+      callback(null, polls);
     });
+    
   },
   addPoll: function(userId, pollName, callback) {
-      mongo.connect(CONNECT_URL, function(err, db) {
-        if (err) callback(err, null);
-        else {
-          var collection = db.collection('Poll');
-          var document = {'user_id': new mongo.ObjectId(userId), 'name':pollName,'active':'true'};
-          collection.insert(document,function(error, documents) {
-            if (error) callback(error, null);
-            else  {
-              db.close();
-              callback(null, documents.ops[0]);
-            }
-          });
-        }
+      var poll = new Poll(
+        {'user_id': new mongo.ObjectId(userId), 'name':pollName,'active':'true'}
+      );
+      poll.save(function(err) {
+        if (err) return callback(err, null);
+        callback(null, poll);
       });
   },
   addPollOption: function(userId, pollId, optionText, callback) {
-       mongo.connect(CONNECT_URL, function(err, db) {
-        if (err) callback(err, null);
-        else {
-          var collection = db.collection('PollOption');
-          var document = {'poll_id': new mongo.ObjectId(pollId), 'text':optionText, 'active':'true'};
-          collection.insert(document,function(error, documents) {
-            if (error) callback(error, null);
-            else  {
-              db.close();
-              callback(null, documents);
-            }
-          });
-        }
+      var option = new PollOption(
+        {'poll_id': new mongo.ObjectId(pollId), 'text':optionText, 'active':'true'}
+      );
+      option.save(function(error) {
+            if (error) return callback(error, null);
+            callback(null, option);
       });
   },
   getPoll: function(pollId, callback) {
-    mongo.connect(CONNECT_URL, function(err, db) {
-      if (err) callback(err, null);
-      else {
-        var collection = db.collection('Poll');
-        var matchQuery = { '_id': new mongo.ObjectId(pollId), 'active':'true'} ;
-        collection.find(
-          matchQuery
-        ).toArray(function(error, documents) {
-          if (error) callback(err, null);
-          else {
-            db.close();
-            if (documents.length > 0) {
-              callback(null, documents[0]);
-            }
-            else {
-              callback('Poll not found', null);
-            }
-          }
-        });
-        
+    var matchQuery = { '_id': new mongo.ObjectId(pollId), 'active':'true'} ;
+    Poll.findOne(
+      matchQuery
+    ).exec(function(error, poll) {
+      if (error) return callback(error, null);
+      if (poll) {
+          callback(null, poll);
       }
-    });
+      else {
+          callback('Poll not found', null);
+      }
+    }); 
   },
   getPollOptions: function(pollId, callback) {
-    mongo.connect(CONNECT_URL, function(err, db) {
-      if (err) callback(err, null);
+    PollOption.find(
+      {'poll_id': new mongo.ObjectId(pollId), 'active':'true'}
+    ).exec(function(error, options) {
+      if (error) return callback(error, null);
       else {
-        var collection = db.collection('PollOption');
-        collection.find(
-          {'poll_id': new mongo.ObjectId(pollId), 'active':'true'}
-          ).toArray(function(error, documents) {
-          if (error) callback(err, null);
-          else {
-            db.close();
-            callback(null, documents);
-          }
-        });
+        callback(null, options);
       }
     });
   },
   saveVote: function(pollId, pollOptionId, callback) {
-    mongo.connect(CONNECT_URL, function(err, db) {
-        if (err) callback(err, null);
-        else {
-          var collection = db.collection('Vote');
-          var document = {'poll_id': new mongo.ObjectId(pollId), 'option_id':new mongo.ObjectId(pollOptionId), 'vote_date': new Date().getTime()};
-          collection.insert(document,function(error, documents) {
-            if (error) callback(error, null);
-            else  {
-              db.close();
-              callback(null, documents);
-            }
-          });
-        }
+    var vote = new Vote(
+      {'poll_id': new mongo.ObjectId(pollId), 'option_id':new mongo.ObjectId(pollOptionId), 'vote_date': new Date().getTime()}
+    );
+    vote.save(function(error) {
+      if (error) return callback(error, null);
+      callback(null, true);
     });
   },
   getVotes: function(pollId, callback) {
-    mongo.connect(CONNECT_URL, function(err, db) {
-      if (err) callback(err, null);
-      else {
-        var collection = db.collection('Vote');
-        collection.aggregate([
-          { "$match": {poll_id: new mongo.ObjectId(pollId) }},
-          { "$group": { _id: {option_id: "$option_id"}, count: {$sum: 1} }}
-        ]).toArray(function(error, votes) {
-          if (error) callback(err, null);
-          else {
-            db.close();
-            var results = [];
-            if (votes != null) {
-              votes.forEach(function(option) {
-                results.push({
-                  option_id: option._id.option_id,
-                  count: option.count
-                });
-              });
-            }
-            callback(null, results);
-          }
+    Vote.aggregate([
+      { "$match": {poll_id: new mongo.ObjectId(pollId) }},
+      { "$group": { _id: {option_id: "$option_id"}, count: {$sum: 1} }}
+    ]).exec(function(error, votes) {
+      if (error) return callback(error, null);
+      var results = [];
+      if (votes != null) {
+        votes.forEach(function(option) {
+          results.push({
+            option_id: option._id.option_id,
+            count: option.count
+          });
         });
-        
       }
+      callback(null, results);
     });
   },
   getAllVotes: function(pollIds, callback) {
-    mongo.connect(CONNECT_URL, function(err, db) {
-      if (err) callback(err, null);
-      else {
-        var pollObjectIds = [];
-        pollIds.forEach(function(pollId) {
-          pollObjectIds.push(new mongo.ObjectId(pollId));
+    var pollObjectIds = [];
+    pollIds.forEach(function(pollId) {
+      pollObjectIds.push(new mongo.ObjectId(pollId));
+    });
+    Vote.aggregate([
+      { "$match": {poll_id: {$in: pollObjectIds }}},
+      { "$group": { _id: {poll_id: "$poll_id"}, count: {$sum: 1} }}
+    ]).exec(function(error, votes) {
+      if (error) return callback(error, null);
+      var results = [];
+      if (votes != null) {
+        votes.forEach(function(option) {
+          results.push({
+            poll_id: option._id.poll_id,
+            count: option.count
+          });
         });
-        var collection = db.collection('Vote');
-        collection.aggregate([
-          { "$match": {poll_id: {$in: pollObjectIds }}},
-          { "$group": { _id: {poll_id: "$poll_id"}, count: {$sum: 1} }}
-        ]).toArray(function(error, votes) {
-          if (error) callback(err, null);
-          else {
-            db.close();
-            var results = [];
-            if (votes != null) {
-              votes.forEach(function(option) {
-                results.push({
-                  poll_id: option._id.poll_id,
-                  count: option.count
-                });
-              });
-            }
-            callback(null, results);
-          }
-        });
-        
       }
+      callback(null, results);
     });
   },
   deletePoll: function(userId, pollId, callback) {
-    mongo.connect(CONNECT_URL, function(err, db) {
-      if (err) callback(err, null);
-      else {
-        var collection = db.collection('Poll');
-        collection.find(
-          {'poll_id':new mongo.ObjectId(pollId), 'user_id':new mongo.ObjectId(userId)}
-        ).toArray(function(error, documents) {
-          if (error) callback(err, null);
-          else {
-            db.close();
-            if (documents.length == 0) {
-              callback('Poll not found', null);
-            }
-            else {
-              collection.update(
-                {'_id':new mongo.ObjectId(pollId)},
-                {$set: {'active':'false'}}
-                );
-                callback(null, true);
-            }
-          }
-        });
-      }
+    Poll.findOneAndUpdate(
+      {'poll_id':new mongo.ObjectId(pollId), 'user_id':new mongo.ObjectId(userId)},
+      {'active':'false'}
+    ).exec(function(error) {
+      if (error) return callback(error, null);
+      callback(null, true);
     });
   }
 };

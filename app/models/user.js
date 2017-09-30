@@ -1,6 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose');
+
+var connection = mongoose.createConnection('mongodb://localhost:27017/myvoter');
 var Schema = mongoose.Schema;
 
 var User = new Schema({
@@ -9,4 +11,4 @@ var User = new Schema({
     password: String
 });
 
-module.exports = mongoose.model('User', User);
+module.exports = connection.model('User', User);
