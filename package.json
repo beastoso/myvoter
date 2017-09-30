@@ -34,7 +34,7 @@
     "mongoose": "^4.1.0"
   },
   "scripts": {
-    "prestart":"start mongod --smallfiles",
+    "prestart":"mongod --smallfiles",
     "start":"node server.js"
   }
 }
